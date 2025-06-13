@@ -1,0 +1,15 @@
+<div [formGroup]="form" class="input-dropdown">
+  <label *ngIf="label">{{ label }}</label>
+  <input
+    type="text"
+    [formControlName]="controlName"
+    (focus)="showDropdown = true"
+    placeholder="Search or type..."
+  />
+
+  <div class="dropdown-list" *ngIf="showDropdown">
+    <div *ngFor="let item of filteredOptions" (click)="selectItem(item)">
+      {{ optionKey && optionKey !== "" ? item[optionKey] : item }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.productMain {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+
+  .content-wrapper {
+    height: calc(100% - 116px);
+    .apps-card {
+      height: calc(100vh - 116px);
+    }
+  }
+}

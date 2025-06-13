@@ -1,0 +1,29 @@
+.input-dropdown {
+  width: 100%;
+  display: inline-block;
+}
+
+input {
+  width: 100%;
+}
+
+.dropdown-list {
+  position: absolute;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--border-color);
+  width: 85%;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.dropdown-list {
+  div {
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  div:hover {
+    background-color: var(--dropdown-hover);
+  }
+}

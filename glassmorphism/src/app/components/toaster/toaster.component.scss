@@ -1,0 +1,43 @@
+.alert-box {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  .message {
+    padding: 16px 24px;
+    border-radius: 12px;
+    background: var(--theme-bg-color);
+    color: var(--theme-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+    animation: fadeInOut 3s ease-in-out;
+    margin-bottom: 10px;
+  }
+  .success {
+    background: rgba(119, 196, 100, 0.4);
+  }
+  .error {
+    background: rgba(211, 104, 104, 0.4);
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

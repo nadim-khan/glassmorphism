@@ -1,0 +1,29 @@
+<div class="content-section">
+  <div class="content-section-title">Users</div>
+  <ul>
+    <li class="adobe-product" *ngFor="let user of usersList">
+      <div class="products">
+        <span class="shortName">{{ user.name | shortName }}</span>
+        {{ user.name | titlecase }}
+      </div>
+      <span class="status">
+        <span class="status-circle green"></span>
+        {{ user.email | titlecase }}</span
+      >
+      <div class="button-wrapper">
+        <button class="content-button status-button open">
+          {{ user.role | titlecase }}
+        </button>
+        <div class="menu">
+          <button class="dropdown">
+            <ul>
+              <li><a>Go to Discover</a></li>
+              <li><a>Learn more</a></li>
+              <li><a>Uninstall</a></li>
+            </ul>
+          </button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

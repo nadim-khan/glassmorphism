@@ -1,0 +1,133 @@
+<div class="loginView" [ngStyle]="{ 'min-height': isLogin ? '50vh' : '100%' }">
+  <div class="formHeader">{{ isLogin ? "Login" : "Register a User" }}</div>
+  <div
+    class="formView"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+    novalidate
+  >
+    <form class="glassForm">
+      <section *ngIf="!isLogin">
+        <label for="">Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Please enter Email"
+        />
+        <div
+          *ngIf="fc['name'].touched && fc['name'].errors"
+          class="form-error-text"
+        >
+          Invalid Name
+        </div>
+      </section>
+      <section>
+        <label for="">Email</label>
+        <input
+          type="text"
+          formControlName="email"
+          placeholder="Please enter Email"
+        />
+        <div
+          *ngIf="fc['email'].touched && fc['email'].errors"
+          class="form-error-text"
+        >
+          Invalid Email
+        </div>
+      </section>
+
+      <div class="singleRowInput">
+        <section *ngIf="!isLogin">
+          <app-input-dropdown
+            [form]="loginForm"
+            controlName="country"
+            label="Select Country"
+            [options]="countryList"
+            [optionKey]="'country'"
+            (onSelect)="onSelectDropdown($event)"
+          ></app-input-dropdown>
+        </section>
+
+        <section *ngIf="!isLogin">
+          <app-input-dropdown
+            [form]="loginForm"
+            controlName="state"
+            label="Select State"
+            [options]="stateList"
+            [optionKey]="'name'"
+            (onSelect)="onSelectDropdown($event)"
+          ></app-input-dropdown>
+        </section>
+      </div>
+
+      <div class="singleRowInput">
+        <section *ngIf="!isLogin">
+          <app-input-dropdown
+            [form]="loginForm"
+            controlName="city"
+            label="Select City"
+            [options]="cityList"
+            [optionKey]="'name'"
+            (onSelect)="onSelectDropdown($event)"
+          ></app-input-dropdown>
+        </section>
+
+        <section *ngIf="!isLogin">
+          <label for="">Address</label>
+          <input
+            type="text"
+            formControlName="address"
+            placeholder="Please enter Address"
+          />
+        </section>
+      </div>
+
+      <section>
+        <label for="">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Please enter Password"
+        />
+        <div
+          *ngIf="fc['password'].touched && fc['password'].errors"
+          class="form-error-text"
+        >
+          Invalid Password
+        </div>
+      </section>
+
+      <section *ngIf="!isLogin">
+        <label for="">Confirm Password</label>
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Please enter Password"
+        />
+        <div
+          *ngIf="fc['confirmPassword'].touched && fc['confirmPassword'].errors"
+          class="form-error-text"
+        >
+          Password is not matching
+        </div>
+      </section>
+      <div class="buttonArea">
+        <button
+          type="submit"
+          class="button-success"
+          [disabled]="loginForm.invalid"
+          [class.isDisabledButton]="loginForm.invalid"
+        >
+          {{ isLogin ? "Login" : "Register" }}
+        </button>
+      </div>
+      <div class="signupArea" *ngIf="isLogin">
+        Click here to <a (click)="isLogin = false; onRegister()">Register</a> a
+        New User
+      </div>
+      <div class="signupArea" *ngIf="!isLogin">
+        Already a user ? <a (click)="isLogin = true; onRegister()">Login</a>
+      </div>
+    </form>
+  </div>
+</div>

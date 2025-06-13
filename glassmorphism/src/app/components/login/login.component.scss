@@ -1,0 +1,64 @@
+@import url("../../../styles.scss");
+
+.loginView {
+  width: 100%;
+  min-height: 50vh;
+  color: var(--theme-color);
+  background-color: var(--theme-bg-color);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  min-width: 50vw;
+  border-radius: 14px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-size: 15px;
+  font-weight: 500;
+
+  .formHeader {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 25px;
+    font-size: 2em;
+  }
+
+  .formView {
+    min-height: calc(50px - 70px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 25px;
+    .glassForm {
+      section {
+        width: 100%;
+      }
+      .singleRowInput {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        section {
+          width: 45%;
+        }
+      }
+      .buttonArea {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .signupArea {
+      margin-top: 20px;
+
+      a {
+        text-decoration: underline;
+        color: var(--theme-color);
+        cursor: pointer;
+      }
+    }
+  }
+}

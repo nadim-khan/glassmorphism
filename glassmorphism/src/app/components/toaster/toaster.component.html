@@ -1,0 +1,5 @@
+<div class="alert-box" *ngIf="alertMessageList && alertMessageList.length">
+  <ng-container *ngFor="let alert of alertMessageList">
+    <div class="message" [ngClass]="alert.type">{{ alert.message }}</div>
+  </ng-container>
+</div>
