@@ -4,12 +4,21 @@ const taskSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    minLength: 5,
-    trim: true
+    minLength: 3,
+    trim: true,
+    match: /^[a-zA-Z0-9 _-]+$/
   },
+  _listId: {
+    type: String,
+    required: true,
+  },
+
   _taskId: {
     type: mongoose.Types.ObjectId,
-    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 

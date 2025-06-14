@@ -55,6 +55,10 @@ const UserSchema = new mongoose.Schema({
     required: false,
     default: 'user'
   },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
   sessions: [{
     token: {
       type: String,

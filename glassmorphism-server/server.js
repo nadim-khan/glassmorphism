@@ -1,7 +1,7 @@
 
 const express = require('express');
 const app = express();
-
+require('dotenv').config();
 const { mongoose } = require('./api/controller/mongoose');
 
 const bodyParser = require('body-parser');
@@ -137,7 +137,8 @@ app.post('/lists', authenticate, (req, res) => {
   // We want to create a new list and return the new list document back to the user (which includes the id)
   // The list information (fields) will be passed in via the JSON request body
   let title = req.body.title;
-
+  console.log('---', req.user_id)
+  debugger
   let newList = new List({
     title,
     _userId: req.user_id
@@ -167,7 +168,8 @@ app.patch('/lists/:id', authenticate, (req, res) => {
  */
 app.delete('/lists/:id', authenticate, (req, res) => {
   // We want to delete the specified list (document with id in the URL)
-  List.findOneAndRemove({
+
+  List.findByIdAndDelete({
     _id: req.params.id,
     _userId: req.user_id
   }).then((removedListDoc) => {
@@ -199,7 +201,6 @@ app.get('/lists/:listId/tasks', authenticate, (req, res) => {
  */
 app.post('/lists/:listId/tasks', authenticate, (req, res) => {
   // We want to create a new task in a list specified by listId
-
   List.findOne({
     _id: req.params.listId,
     _userId: req.user_id
@@ -216,7 +217,8 @@ app.post('/lists/:listId/tasks', authenticate, (req, res) => {
     if (canCreateTask) {
       let newTask = new Task({
         title: req.body.title,
-        _listId: req.params.listId
+        _listId: req.params.listId,
+        _taskId: new mongoose.Types.ObjectId(),
       });
       newTask.save().then((newTaskDoc) => {
         res.send(newTaskDoc);

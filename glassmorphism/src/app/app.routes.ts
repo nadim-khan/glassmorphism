@@ -4,7 +4,6 @@ import { authGuard } from './services/auth.guard';
 import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
-import { TaskManagerComponent } from './components/task-manager/task-manager.component';
 
 export const routes: Routes = [
   {
@@ -28,7 +27,7 @@ export const routes: Routes = [
   },
   {
     path: 'taskManager',
-    component: TaskManagerComponent
+    loadChildren: () => import('./modules/task-manager/task-manager.routes').then((m) => m.TaskRoutes)
   },
   {
     path: '**',

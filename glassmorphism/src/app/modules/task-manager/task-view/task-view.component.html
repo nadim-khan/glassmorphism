@@ -1,0 +1,104 @@
+<div class="taskManagerMain">
+  <div class="content-wrapper">
+    <div class="content-wrapper-header">
+      <div class="content-wrapper-context">
+        <h2 class="img-content">Task Manager</h2>
+        <input
+          type="text "
+          [(ngModel)]="listTitle"
+          placeholder="Add List Title .."
+        />
+        <button
+          class="content-button"
+          (click)="createList()"
+          [disabled]="listTitle.trim() === ''"
+          [class.isDisabledButton]="listTitle.trim() === ''"
+        >
+          Add to List
+        </button>
+      </div>
+      <img
+        class="content-wrapper-img"
+        src="../../../assets/images/images/taskManager.png"
+        alt=""
+      />
+    </div>
+    <div class="content-section">
+      <div class="content-section-title">List</div>
+      <ul>
+        @for (item of lists; track $index) {
+        <li
+          class="adobe-product"
+          (click)="
+            activeListId.trim() !== '' && activeListId == item._id
+              ? (activeListId = '')
+              : (activeListId = item._id);
+            getTask()
+          "
+        >
+          <div class="products">
+            {{ item.title | titlecase }}
+          </div>
+          <div class="button-wrapper">
+            <button class="content-button status-button">Edit Task</button>
+            <button
+              class="content-button status-button warn"
+              (click)="$event.stopPropagation(); onDeleteListClick(item._id)"
+            >
+              Delete List
+            </button>
+          </div>
+        </li>
+        <div class="content-section" *ngIf="item._id === activeListId">
+          <div class="addTaskView">
+            <input
+              type="text "
+              [(ngModel)]="taskTitle"
+              placeholder="Add Task Title .."
+            />
+            <button
+              class="content-button"
+              (click)="createTask(item._id)"
+              [disabled]="taskTitle.trim() === ''"
+              [class.isDisabledButton]="taskTitle.trim() === ''"
+            >
+              Add
+            </button>
+          </div>
+          @for (task of tasks; track $index) {
+
+          <div class="tasks-card">
+            <div class="taskLogo">&nbsp;Task &nbsp;</div>
+            <div class="task-card">
+              <span> {{ task.title }} </span>
+            </div>
+          </div>
+          }@empty {
+          <div
+            style="
+              height: 10vh;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            No Task available
+          </div>
+          }
+        </div>
+        }@empty {
+        <div
+          style="
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          No List available
+        </div>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

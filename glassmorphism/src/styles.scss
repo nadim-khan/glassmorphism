@@ -27,6 +27,10 @@
 
   --button-form-bg: #140211;
   --button-form-bg-hover: #4a043e;
+  --button-warn: #ef6151;
+  --button-success: #5cef51;
+  --bg-warn: #ef615196;
+  --bg-success: #51ef6196;
 }
 
 .light-mode {
@@ -938,4 +942,9 @@ body.light-mode .video-bg:before {
   .button-success:hover {
     background-color: var(--button-form-bg-hover);
   }
+}
+
+.isDisabledButton {
+  cursor: not-allowed;
+  background-color: #999ba5 !important;
 }

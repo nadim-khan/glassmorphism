@@ -16,10 +16,10 @@
     margin-bottom: 10px;
   }
   .success {
-    background: rgba(119, 196, 100, 0.4);
+    background: var(--bg-success);
   }
   .error {
-    background: rgba(211, 104, 104, 0.4);
+    background: var(--bg-warn);
   }
 }
 
