@@ -37,11 +37,45 @@
           "
         >
           <div class="products">
-            {{ item.title | titlecase }}
+            <span *ngIf="!editListId || editListId !== item._id">{{
+              item.title | titlecase
+            }}</span>
+            <div *ngIf="editListId === item._id">
+              <input
+                type="text "
+                [(ngModel)]="editListTitle"
+                placeholder="Add Task Title .."
+              />
+              <button
+                class="content-button"
+                (click)="onEditListClick(item._id)"
+                [disabled]="editListTitle.trim() === ''"
+                [class.isDisabledButton]="editListTitle.trim() === ''"
+              >
+                Update
+              </button>
+              <button
+                class="content-button warn"
+                (click)="$event.stopPropagation(); onCancelListTaskEdit()"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
           <div class="button-wrapper">
-            <button class="content-button status-button">Edit Task</button>
             <button
+              *ngIf="!editListId || editListId !== item._id"
+              class="content-button status-button"
+              (click)="
+                $event.stopPropagation();
+                editListId = item._id;
+                editListTitle = item.title
+              "
+            >
+              Edit List
+            </button>
+            <button
+              *ngIf="!editListId || editListId !== item._id"
               class="content-button status-button warn"
               (click)="$event.stopPropagation(); onDeleteListClick(item._id)"
             >
@@ -49,7 +83,13 @@
             </button>
           </div>
         </li>
-        <div class="content-section" *ngIf="item._id === activeListId">
+        <div
+          class="content-section"
+          *ngIf="
+            item._id === activeListId &&
+            (!editListId || editListId !== item._id)
+          "
+        >
           <div class="addTaskView">
             <input
               type="text "
@@ -68,9 +108,80 @@
           @for (task of tasks; track $index) {
 
           <div class="tasks-card">
-            <div class="taskLogo">&nbsp;Task &nbsp;</div>
+            <div
+              class="taskLogo"
+              [ngClass]="task.completed ? 'completed' : 'active'"
+            >
+              &nbsp;{{ task.completed ? "Done" : "Active" }} &nbsp;
+            </div>
             <div class="task-card">
-              <span> {{ task.title }} </span>
+              <div class="title">
+                <div *ngIf="editTaskId !== task._id">{{ task.title }}</div>
+                <div *ngIf="editTaskId !== task._id" style="font-size: 12px">
+                  {{ task.createdAt | date }}
+                </div>
+                <div *ngIf="editTaskId === task._id">
+                  <input
+                    type="text "
+                    [(ngModel)]="editTaskTitle"
+                    placeholder="Add Task Title .."
+                  />
+                </div>
+              </div>
+              <div class="button-wrapper">
+                <button
+                  *ngIf="editTaskId === task._id"
+                  class="content-button"
+                  (click)="updateTask(item._id, task._id)"
+                  [disabled]="editTaskTitle.trim() === ''"
+                  [class.isDisabledButton]="editTaskTitle.trim() === ''"
+                >
+                  Update Task
+                </button>
+                <button
+                  *ngIf="editTaskId === task._id"
+                  class="content-button warn"
+                  (click)="$event.stopPropagation(); onCancelListTaskEdit()"
+                >
+                  Cancel
+                </button>
+                <button
+                  *ngIf="
+                    !task.completed && (!editTaskId || editTaskId !== task._id)
+                  "
+                  class="content-button status-button success"
+                  (click)="
+                    $event.stopPropagation();
+                    editTaskId = task._id;
+                    editTaskTitle = task.title;
+                    updateTask(item._id, task._id, true)
+                  "
+                >
+                  Mark as Completed
+                </button>
+                <button
+                  *ngIf="!editTaskId || editTaskId !== task._id"
+                  class="content-button status-button"
+                  (click)="
+                    $event.stopPropagation();
+                    editTaskId = task._id;
+                    editTaskTitle = task.title
+                  "
+                >
+                  Edit Task
+                </button>
+
+                <button
+                  *ngIf="!editTaskId || editTaskId !== task._id"
+                  class="content-button status-button warn"
+                  (click)="
+                    $event.stopPropagation();
+                    onDeleteTaskClick(item._id, task._id)
+                  "
+                >
+                  Delete Task
+                </button>
+              </div>
             </div>
           </div>
           }@empty {

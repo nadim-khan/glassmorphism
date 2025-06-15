@@ -24,9 +24,9 @@ export class TaskService {
     return this.makeRequest.patch(`lists/${id}`, { title });
   }
 
-  updateTask(listId: string, taskId: string, title: string) {
+  updateTask(listId: string, taskId: string, title: string, completed: boolean) {
     // We want to send a web request to update a list
-    return this.makeRequest.patch(`lists/${listId}/tasks/${taskId}`, { title });
+    return this.makeRequest.patch(`lists/${listId}/tasks/${taskId}`, { title, completed });
   }
 
   deleteTask(listId: string, taskId: string) {

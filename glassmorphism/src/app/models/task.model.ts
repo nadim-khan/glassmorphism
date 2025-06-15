@@ -3,4 +3,5 @@ export interface Task {
   _listId: string;
   title: string;
   completed: boolean;
+  createdAt: string;
 }

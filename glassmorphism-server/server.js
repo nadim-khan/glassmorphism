@@ -137,8 +137,6 @@ app.post('/lists', authenticate, (req, res) => {
   // We want to create a new list and return the new list document back to the user (which includes the id)
   // The list information (fields) will be passed in via the JSON request body
   let title = req.body.title;
-  console.log('---', req.user_id)
-  debugger
   let newList = new List({
     title,
     _userId: req.user_id
@@ -287,7 +285,7 @@ app.delete('/lists/:listId/tasks/:taskId', authenticate, (req, res) => {
   }).then((canDeleteTasks) => {
 
     if (canDeleteTasks) {
-      Task.findOneAndRemove({
+      Task.findOneAndDelete({
         _id: req.params.taskId,
         _listId: req.params.listId
       }).then((removedTaskDoc) => {
@@ -385,7 +383,6 @@ let deleteTasksFromList = (_listId) => {
   Task.deleteMany({
     _listId
   }).then(() => {
-    console.log("Tasks from " + _listId + " were deleted!");
   })
 }
 

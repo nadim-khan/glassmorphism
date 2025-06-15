@@ -11,7 +11,7 @@ import { ToasterService } from '../../../services/toaster.service';
   selector: 'app-task-view',
   templateUrl: './task-view.component.html',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule],
   styleUrls: ['./task-view.component.scss']
 })
 export class TaskViewComponent implements OnInit {
@@ -19,6 +19,10 @@ export class TaskViewComponent implements OnInit {
   lists: List[] = [];
   tasks: Task[] = [];
   listTitle = '';
+  editListTitle = '';
+  editListId = '';
+  editTaskTitle = '';
+  editTaskId = '';
   taskTitle = '';
   activeListId: string = '';
 
@@ -27,19 +31,6 @@ export class TaskViewComponent implements OnInit {
   constructor(private taskService: TaskService, private route: ActivatedRoute, private router: Router, private toasterService: ToasterService) { }
 
   ngOnInit() {
-    this.route.params.subscribe(
-      (params: any) => {
-        if (params.listId) {
-          this.selectedListId = params.listId;
-          this.taskService.getTasks(params.listId).subscribe((tasks: any) => {
-            this.tasks = tasks;
-          })
-        } else {
-          this.tasks = [];
-        }
-      }
-    )
-
     this.getAllList();
 
   }
@@ -60,6 +51,29 @@ export class TaskViewComponent implements OnInit {
     }, (err: any) => {
       this.toasterService.error('Error in creating list with this title')
     });
+  }
+
+  onEditListClick(listId: any) {
+    this.taskService.updateList(listId, this.editListTitle).subscribe(() => {
+      this.onCancelListTaskEdit();
+      this.toasterService.success(`Updated to ${this.editListTitle} successfully`);
+    }, (err: any) => {
+      this.toasterService.error('Error in updating list')
+    })
+  }
+
+  onDeleteListClick(listId: string) {
+    this.taskService.deleteList(listId).subscribe((res: any) => {
+      this.toasterService.success(`List Item ${res.title} deleted successfully`);
+      this.getAllList();
+    })
+  }
+
+  onCancelListTaskEdit() {
+    this.editListId = '';
+    this.editListTitle = '';
+    this.editTaskId = '';
+    this.editTaskTitle = '';
   }
 
   createTask(listId: string) {
@@ -89,27 +103,20 @@ export class TaskViewComponent implements OnInit {
     })
   }
 
-  onDeleteListClick(listId: string) {
-    this.taskService.deleteList(listId).subscribe((res: any) => {
-      this.toasterService.success(`List Item ${res.title} deleted successfully`);
-      this.getAllList();
+  updateTask(listId: string, taskId: string, completed?: boolean) {
+    this.taskService.updateTask(listId, this.editTaskId, this.editTaskTitle, completed ? completed : false).subscribe(() => {
+      this.onCancelListTaskEdit();
+      this.getTask();
+      this.toasterService.success(`Task Updated to ${this.editListTitle} successfully`);
+    }, (err: any) => {
+      this.toasterService.error('Error in Updating Task')
     })
   }
 
-  onDeleteTaskClick(id: string) {
-    this.taskService.deleteTask(this.selectedListId, id).subscribe((res: any) => {
-      this.tasks = this.tasks.filter(val => val._id !== id);
-      console.log(res);
+  onDeleteTaskClick(listId: string, id: string) {
+    this.taskService.deleteTask(listId, id).subscribe((res: any) => {
+      this.getTask();
+      this.toasterService.success(`Task ${res.title} deleted successfully`);
     })
   }
-
-  navigateTo(link: string, id?: any) {
-    if (id) {
-      this.router.navigate(['taskManager/' + link, id])
-    } else {
-      this.router.navigate(['taskManager/' + link])
-    }
-
-  }
-
 }

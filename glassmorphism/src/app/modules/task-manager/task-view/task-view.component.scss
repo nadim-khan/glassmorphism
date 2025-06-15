@@ -1,4 +1,11 @@
 .taskManagerMain {
+  .content-button {
+    margin-top: 0;
+    margin-right: 10px;
+  }
+  .warn {
+    background-color: var(--button-warn);
+  }
   .content-wrapper-context {
     max-width: 100%;
     width: 100%;
@@ -35,6 +42,32 @@
   }
 
   .content-section {
+    .products {
+      width: 100%;
+    }
+    input {
+      width: 90%;
+      height: 40px;
+      border: none;
+      background-color: var(--search-bg);
+      border-radius: 4px;
+      font-family: var(--body-font);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 0 10px 0 10px;
+      box-shadow: 0 0 0 2px rgb(134 140 160 / 2%);
+      color: var(--theme-color);
+
+      &::placeholder {
+        font-family: var(--body-font);
+        color: var(--inactive-color);
+        font-size: 15px;
+        font-weight: 500;
+      }
+    }
+    button {
+      height: 40px;
+    }
     ul {
       max-height: 60vh;
       min-height: 60vh;
@@ -62,29 +95,6 @@
           justify-content: space-between;
           align-items: baseline;
           margin-bottom: 1rem;
-          input {
-            width: 90%;
-            height: 40px;
-            border: none;
-            background-color: var(--search-bg);
-            border-radius: 4px;
-            font-family: var(--body-font);
-            font-size: 12px;
-            font-weight: 500;
-            padding: 0 10px 0 10px;
-            box-shadow: 0 0 0 2px rgb(134 140 160 / 2%);
-            color: var(--theme-color);
-
-            &::placeholder {
-              font-family: var(--body-font);
-              color: var(--inactive-color);
-              font-size: 15px;
-              font-weight: 500;
-            }
-          }
-          button {
-            height: 40px;
-          }
         }
       }
 
@@ -98,11 +108,15 @@
           border-radius: 2px;
           padding: 0px;
           border: 1px solid var(--border-color);
+          background-color: var(--button-warn);
+        }
+
+        .active {
           background-color: var(--dropdown-bg);
         }
         .task-card {
           display: flex;
-          flex-direction: column;
+          align-items: center;
           font-size: 16px;
           background-color: var(--content-bg);
           border-radius: 14px;
@@ -110,6 +124,11 @@
           padding: 20px;
           cursor: pointer;
           transition: 0.3s ease;
+          justify-content: space-between;
+          .title {
+            margin-left: 10px;
+            min-width: 60%;
+          }
         }
       }
     }

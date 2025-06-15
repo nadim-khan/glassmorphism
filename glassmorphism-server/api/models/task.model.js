@@ -8,6 +8,10 @@ const taskSchema = new mongoose.Schema({
     trim: true,
     match: /^[a-zA-Z0-9 _-]+$/
   },
+  completed: {
+    type: Boolean,
+    default: false
+  },
   _listId: {
     type: String,
     required: true,
