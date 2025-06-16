@@ -56,6 +56,7 @@ export class TaskViewComponent implements OnInit {
   onEditListClick(listId: any) {
     this.taskService.updateList(listId, this.editListTitle).subscribe(() => {
       this.onCancelListTaskEdit();
+      this.getAllList();
       this.toasterService.success(`Updated to ${this.editListTitle} successfully`);
     }, (err: any) => {
       this.toasterService.error('Error in updating list')

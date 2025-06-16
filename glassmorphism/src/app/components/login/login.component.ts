@@ -22,6 +22,7 @@ export class LoginComponent {
   stateList: any[] = [];
   cityList: any[] = [];
   showDropdown = false;
+  selectedFile: File | null = null;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
@@ -52,8 +53,26 @@ export class LoginComponent {
     };
   }
 
+  onFileSelect(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.loginForm.patchValue({ 'profilePic': this.selectedFile })
+    }
+  }
+
   onSubmit(): void {
     if (this.loginForm.valid) {
+      const formData = new FormData();
+      const formValue = this.loginForm.value;
+
+      Object.keys(formValue).forEach((key) => {
+        formData.append(key, formValue[key]);
+      });
+
+      if (this.selectedFile) {
+        formData.append('profilePic', this.selectedFile);
+      }
       if (this.isLogin) {
         this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe((response: any) => {
           this.router.navigate(['/quran']);
@@ -89,12 +108,15 @@ export class LoginComponent {
       controls.forEach((controlName: any) => {
         this.loginForm.removeControl(controlName);
       })
+      this.loginForm.removeControl('profilePic');
 
     } else {
       controls.forEach((controlName: any) => {
         let fc = new FormControl('', [Validators.required]);
         this.loginForm.addControl(controlName, fc);
       });
+      this.loginForm.addControl('profilePic', new FormControl([''], [Validators.required]));
+
 
       this.getCountryList()
     }

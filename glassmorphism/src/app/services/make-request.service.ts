@@ -37,10 +37,9 @@ export class MakeRequestService {
     });
   }
 
-  signup(name: string, email: string, password: string, country: string, city: string, address: string) {
-    return this.http.post(`${this.ROOT_URL}/users`, {
-      name, email, password, country, city, address
-    }, {
+
+  signup(formData: FormData) {
+    return this.http.post<any>(`${this.ROOT_URL}/users`, formData, {
       observe: 'response'
     });
   }

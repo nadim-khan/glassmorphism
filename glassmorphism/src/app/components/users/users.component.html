@@ -3,7 +3,16 @@
   <ul>
     <li class="adobe-product" *ngFor="let user of usersList">
       <div class="products">
-        <span class="shortName">{{ user.name | shortName }}</span>
+        <img
+          *ngIf="user.profilePic"
+          class="pic"
+          [src]="user.profilePic"
+          alt=""
+          srcset=""
+        />
+        <span *ngIf="user.profilePic" class="shortName">{{
+          user.name | shortName
+        }}</span>
         {{ user.name | titlecase }}
       </div>
       <span class="status">

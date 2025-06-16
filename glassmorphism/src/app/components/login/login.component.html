@@ -8,6 +8,15 @@
   >
     <form class="glassForm">
       <section *ngIf="!isLogin">
+        <label>Upload Profile Picture</label>
+        <input
+          type="file"
+          formControlName="profilePic"
+          (change)="onFileSelect($event)"
+          accept="image/*"
+        />
+      </section>
+      <section *ngIf="!isLogin">
         <label for="">Name</label>
         <input
           type="text"

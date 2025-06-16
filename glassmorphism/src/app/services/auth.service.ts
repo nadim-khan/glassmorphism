@@ -25,8 +25,31 @@ export class AuthService {
   }
 
   signup(data: any) {
-    const { name, email, password, country, city, address } = data;
-    return this.webService.signup(name, email, password, country, city, address).pipe(
+    const {
+      name,
+      email,
+      password,
+      country,
+      state,
+      city,
+      address,
+      profilePic // assumed file input (e.g. from `<input type="file" />`)
+    } = data.value;
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('country', country);
+    formData.append('state', state);
+    formData.append('city', city);
+    formData.append('address', address);
+
+    if (profilePic) {
+      formData.append('profilePic', profilePic); // key must match backend
+    }
+
+    return this.webService.signup(formData).pipe(
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         const accessToken = res.headers.get('x-access-token') ?? '';
@@ -36,6 +59,7 @@ export class AuthService {
       })
     );
   }
+
 
 
 

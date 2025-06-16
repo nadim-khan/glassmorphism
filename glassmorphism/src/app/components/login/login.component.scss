@@ -34,6 +34,11 @@
     align-items: center;
     padding: 0 25px;
     .glassForm {
+      .pic {
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+      }
       section {
         width: 100%;
       }

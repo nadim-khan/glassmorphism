@@ -59,6 +59,10 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  profilePic: {
+    type: String,
+    required: false
+  },
   sessions: [{
     token: {
       type: String,
