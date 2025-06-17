@@ -7,14 +7,24 @@
     novalidate
   >
     <form class="glassForm">
-      <section *ngIf="!isLogin">
+      <section *ngIf="!isLogin" class="avatar-upload-section">
         <label>Upload Profile Picture</label>
-        <input
-          type="file"
-          formControlName="profilePic"
-          (change)="onFileSelect($event)"
-          accept="image/*"
-        />
+        <div class="avatar-container">
+          <img
+            [src]="previewUrl || 'assets/default-avatar.png'"
+            alt="Avatar Preview"
+            class="avatar-preview"
+          />
+          <label class="upload-btn">
+            <input
+              type="file"
+              (change)="onFileSelect($event)"
+              accept="image/*"
+              hidden
+            />
+            &#9998;
+          </label>
+        </div>
       </section>
       <section *ngIf="!isLogin">
         <label for="">Name</label>

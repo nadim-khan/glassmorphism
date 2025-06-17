@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+const config = require('../config/config');
 mongoose.Promise = global.Promise;
+const mongoUri = `mongodb+srv://${config.mongo.DB_USER}:${config.mongo.DB_KEY}@gm-cluster-0.blvz8mv.mongodb.net/`
 
-mongoose.connect(`mongodb+srv://${process.env.dbUser}:${process.env.dbPass}@gm-cluster-0.blvz8mv.mongodb.net/`, { useNewUrlParser: true, useUnifiedTopology: true }).then((data) => {
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true }).then((data) => {
   console.log('Successfully Connected to Mongo DB')
 }).catch((e) => {
   console.log('Error on Mongo DB Connection \n', e)
-})
-
-// To prevent deprectation warnings (from MongoDB native driver)
-
+});
 
 module.exports = {
   mongoose

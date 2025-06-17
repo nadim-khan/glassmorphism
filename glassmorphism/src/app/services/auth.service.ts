@@ -61,9 +61,6 @@ export class AuthService {
   }
 
 
-
-
-
   logout() {
     this.removeSession();
 
@@ -80,6 +77,10 @@ export class AuthService {
 
   getUserId() {
     return localStorage.getItem('user-id');
+  }
+
+  getCurrentUserDetails() {
+    return this.http.get<any>(`${this.webService.ROOT_URL}/users/${this.getUserId()}`)
   }
 
   setAccessToken(accessToken: string) {

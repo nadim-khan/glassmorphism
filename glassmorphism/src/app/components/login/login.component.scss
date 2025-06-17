@@ -33,7 +33,46 @@
     justify-content: center;
     align-items: center;
     padding: 0 25px;
+    height: 80vh;
+    overflow: auto;
     .glassForm {
+      .avatar-upload-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+
+        .avatar-container {
+          position: relative;
+          width: 40px;
+          height: 40px;
+
+          .avatar-preview {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ccc;
+          }
+
+          .upload-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #333;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+          }
+        }
+      }
+
       .pic {
         height: 24px;
         width: 24px;

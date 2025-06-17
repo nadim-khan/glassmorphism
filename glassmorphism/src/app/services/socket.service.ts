@@ -7,20 +7,27 @@ import { Observable } from 'rxjs';
 })
 export class SocketService {
   private socket: Socket;
-  private readonly uri: string = 'http://localhost:8088';
+  private readonly SERVER_URL = 'http://localhost:8088';
 
   constructor() {
-    this.socket = io(this.uri);
+    this.socket = io(this.SERVER_URL);
   }
 
-  sendMessage(message: string) {
-    this.socket.emit('message', message);
+  // Register user with server
+  register(userId: string) {
+    this.socket.emit('register', userId);
   }
 
-  getMessages(): Observable<string> {
+  // Send message to another user
+  sendPrivateMessage(toUserId: string, message: string) {
+    this.socket.emit('send-private-message', { toUserId, message });
+  }
+
+  // Listen for private messages
+  onPrivateMessage(): Observable<{ fromUserId: string, message: string }> {
     return new Observable(observer => {
-      this.socket.on('message', (msg: string) => {
-        observer.next(msg);
+      this.socket.on('private-message', (data) => {
+        observer.next(data);
       });
     });
   }

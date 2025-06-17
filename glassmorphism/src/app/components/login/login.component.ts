@@ -23,6 +23,7 @@ export class LoginComponent {
   cityList: any[] = [];
   showDropdown = false;
   selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
@@ -53,11 +54,19 @@ export class LoginComponent {
     };
   }
 
-  onFileSelect(event: any) {
-    const file = event.target.files[0];
+
+
+  onFileSelect(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      this.selectedFile = file;
-      this.loginForm.patchValue({ 'profilePic': this.selectedFile })
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+        this.loginForm.patchValue({ profilePic: file });
+        this.selectedFile = file;
+        this.loginForm.patchValue({ 'profilePic': this.selectedFile })
+      };
+      reader.readAsDataURL(file);
     }
   }
 

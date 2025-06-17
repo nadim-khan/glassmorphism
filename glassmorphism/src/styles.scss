@@ -273,6 +273,7 @@ body.light-mode .video-bg:before {
   padding: 0 16px 0 40px;
   margin-left: auto;
   flex-shrink: 0;
+  gap: 1.5rem;
   svg {
     width: 22px;
     color: #f9fafb;
@@ -689,6 +690,7 @@ body.light-mode .video-bg:before {
   background: transparent;
   border: none;
   cursor: pointer;
+  z-index: 9999;
   ul {
     position: absolute;
     background: var(--dropdown-bg);
@@ -709,6 +711,7 @@ body.light-mode .video-bg:before {
 }
 
 .dropdown.is-active {
+  z-index: 9999;
   ul {
     opacity: 1;
     pointer-events: all;
@@ -970,4 +973,19 @@ body.light-mode .video-bg:before {
 .isDisabledButton {
   cursor: not-allowed;
   background-color: #999ba5 !important;
+}
+
+.profile-circle {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  img {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+  }
 }

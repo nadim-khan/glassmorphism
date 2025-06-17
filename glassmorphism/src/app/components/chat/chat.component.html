@@ -1,7 +1,47 @@
-<div>
-  <ul>
-    <li *ngFor="let msg of messages">{{ msg }}</li>
-  </ul>
-  <input [(ngModel)]="message" placeholder="Type a message..." />
-  <button (click)="send()">Send</button>
+<div class="chat-container">
+  <aside class="user-list">
+    <ul>
+      <ng-container *ngFor="let user of users">
+        <li *ngIf="currentUserId === user._id" [class.active]="true">
+          <span class="profile-circle">
+            <img [src]="user.profilePic" alt="" srcset="" /> </span
+          >{{ user.name }}
+        </li>
+        <li
+          *ngIf="currentUserId !== user._id"
+          (click)="selectUser(user)"
+          [class.active]="user === selectedUser"
+        >
+          <span class="profile-circle">
+            <img [src]="user.profilePic" alt="" srcset="" /> </span
+          >{{ user.name }}
+        </li>
+      </ng-container>
+    </ul>
+  </aside>
+
+  <section class="chat-window" *ngIf="selectedUser">
+    <h3>
+      <span class="profile-circle">
+        <img [src]="selectedUser.profilePic" alt="" srcset="" /> </span
+      >{{ selectedUser.name }}
+    </h3>
+    <div class="messages">
+      <div
+        *ngFor="let msg of messages"
+        [ngClass]="{ self: msg.from === currentUserId }"
+      >
+        <span>{{ msg.from === currentUserId ? "You" : msg.from }}:</span>
+        {{ msg.text }}
+      </div>
+    </div>
+    <div class="message-box">
+      <input [(ngModel)]="message" placeholder="Type a message..." />
+      <button (click)="sendMessage()">Send</button>
+    </div>
+  </section>
+
+  <section class="chat-placeholder" *ngIf="!selectedUser">
+    <p>Select a user to start chatting</p>
+  </section>
 </div>
