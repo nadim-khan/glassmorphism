@@ -15,7 +15,7 @@
           <img [src]="usr.profilePic" alt="Alice" />
           <div class="info">
             <h4>{{ usr.name }}</h4>
-            <span>Typing...</span>
+            <!-- <span>Typing...</span> -->
           </div>
         </li>
       </ng-container>
@@ -40,7 +40,6 @@
         [class.received]="userDetails._id == message.from"
         [class.sent]="userDetails._id != message.from"
       >
-        <pre>{{ message | json }}</pre>
         {{ message.message }}
       </div>
 
