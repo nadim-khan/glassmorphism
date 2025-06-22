@@ -1,47 +1,60 @@
-<div class="chat-container">
-  <aside class="user-list">
-    <ul>
-      <ng-container *ngFor="let user of users">
-        <li *ngIf="currentUserId === user._id" [class.active]="true">
-          <span class="profile-circle">
-            <img [src]="user.profilePic" alt="" srcset="" /> </span
-          >{{ user.name }}
-        </li>
+<div class="chat-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar glass" #sidebar>
+    <div class="profile">
+      <img [src]="userDetails.profilePic" alt="Avatar" />
+      <h3>{{ userDetails.name }}</h3>
+    </div>
+    <ul class="contacts">
+      <ng-container *ngFor="let usr of users">
         <li
-          *ngIf="currentUserId !== user._id"
-          (click)="selectUser(user)"
-          [class.active]="user === selectedUser"
+          class="contact"
+          *ngIf="userDetails._id !== usr._id"
+          (click)="selectUser(usr)"
         >
-          <span class="profile-circle">
-            <img [src]="user.profilePic" alt="" srcset="" /> </span
-          >{{ user.name }}
+          <img [src]="usr.profilePic" alt="Alice" />
+          <div class="info">
+            <h4>{{ usr.name }}</h4>
+            <span>Typing...</span>
+          </div>
         </li>
       </ng-container>
     </ul>
   </aside>
 
-  <section class="chat-window" *ngIf="selectedUser">
-    <h3>
-      <span class="profile-circle">
-        <img [src]="selectedUser.profilePic" alt="" srcset="" /> </span
-      >{{ selectedUser.name }}
-    </h3>
-    <div class="messages">
-      <div
-        *ngFor="let msg of messages"
-        [ngClass]="{ self: msg.from === currentUserId }"
-      >
-        <span>{{ msg.from === currentUserId ? "You" : msg.from }}:</span>
-        {{ msg.text }}
-      </div>
-    </div>
-    <div class="message-box">
-      <input [(ngModel)]="message" placeholder="Type a message..." />
-      <button (click)="sendMessage()">Send</button>
-    </div>
-  </section>
+  <!-- Resizer -->
+  <div class="resizer"></div>
 
-  <section class="chat-placeholder" *ngIf="!selectedUser">
-    <p>Select a user to start chatting</p>
-  </section>
+  <!-- Main Chat -->
+  <main class="chat-area glass">
+    @if (selectedUser) {
+    <div class="chat-header">
+      <h2>{{ selectedUser.name }}</h2>
+      <span>Online</span>
+    </div>
+
+    <div class="chat-messages">
+      @for (message of messages; track $index) {
+      <div
+        class="message"
+        [class.received]="userDetails._id == message.from"
+        [class.sent]="userDetails._id != message.from"
+      >
+        <pre>{{ message | json }}</pre>
+        {{ message.message }}
+      </div>
+
+      }
+    </div>
+
+    <div class="chat-input">
+      <input
+        type="text"
+        placeholder="Type something..."
+        [(ngModel)]="message"
+      />
+      <button (click)="sendMessage()">➤</button>
+    </div>
+    } @else { Hello }
+  </main>
 </div>

@@ -55,4 +55,8 @@ export class MakeRequestService {
       observe: 'response'
     });
   }
+
+  getAllMessages(from: any, to: any) {
+    return this.http.get<{ success: boolean; messages: any[] }>(`${this.ROOT_URL}/read-messages?from=${from}&to=${to}`);
+  }
 }

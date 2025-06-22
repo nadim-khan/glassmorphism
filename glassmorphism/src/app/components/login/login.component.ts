@@ -92,7 +92,8 @@ export class LoginComponent {
       } else {
         if (this.loginForm.valid) {
           this.authService.signup(this.loginForm).subscribe((response: any) => {
-            this.router.navigate(['/quran']);
+            debugger
+            this.router.navigate(['/chat']);
             this.toasterService.success(`Welcome ${response.name} !`)
           })
         }
