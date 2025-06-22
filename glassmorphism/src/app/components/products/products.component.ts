@@ -17,6 +17,7 @@ export class ProductsComponent {
   }
 
   ngOnInit() {
+    localStorage.clear();
     this.apiService.getAllProducts().subscribe((res: any) => {
       this.allProducts = res;
     })

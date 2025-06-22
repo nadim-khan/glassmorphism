@@ -6,8 +6,10 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const config = require('./api/config/config');
 require('dotenv').config();
+const skt = require('./api/config/socket')
 
 const { mongoose } = require('./api/controller/mongoose');
+const mongoUri = `mongodb+srv://nadeem:bIzwdRsYtXKpY0GO@gm-cluster-0.blvz8mv.mongodb.net/`
 const userRoutes = require('./api/routes/user.route');
 
 const app = express();
@@ -50,7 +52,18 @@ app.post('/send-message', (req, res) => {
   else return res.status(404).send({ error: 'User not connected' });
 });
 
+app.get('/read-messages', (req, res) => {
+  const messages = skt.readAllMessages();
+  res.json({ success: true, messages });
+});
+
 server.listen(config.port, () => {
   console.clear();
   console.log(`Server is listening on port ${config.port}`);
+  mongoose.connect(mongoUri).then((data) => {
+    console.log('Successfully Connected to Mongo DB')
+  }).catch((e) => {
+    console.log('Error on Mongo DB Connection \n', e)
+  });
+
 });
